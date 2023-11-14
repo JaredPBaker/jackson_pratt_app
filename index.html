@@ -1,16 +1,182 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Jackson Pratt App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333333;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      border: 1px solid #cccccc;
+      background-color: #ffffff;
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .column {
+      flex: 1;
+      margin: 10px;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #666666;
+    }
+
+    .input {
+      width: 100%;
+      height: 30px;
+      border: 1px solid #999999;
+      padding: 5px;
+    }
+
+    .button {
+      width: 100%;
+      height: 40px;
+      border: none;
+      background-color: #0099ff;
+      color: #ffffff;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #0077cc;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .table th, .table td {
+      border: 1px solid #999999;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .table th {
+      background-color: #cccccc;
+      color: #333333;
+    }
+  </style>
 </head>
 <body>
-    <div class="container1">
-        <h1 class="center">Jackson Pratt Drainage System</h1>
-        <h2 class="center">A Place To Record Your Drainage</h2>
+  <h1>Jackson-Pratt Fluid Drainage Tracker</h1>
+  <div class="container">
+    <div class="row">
+      <div class="column">
+        <p class="label">Date:</p>
+        <input type="date" class="input" id="date">
+      </div>
+      <div class="column">
+        <p class="label">Time:</p>
+        <input type="time" class="input" id="time">
+      </div>
+      <div class="column">
+        <p class="label">Amount (ml):</p>
+        <input type="number" class="input" id="amount">
+      </div>
     </div>
+    <div class="row">
+      <div class="column">
+        <button class="button" id="add">Add Record</button>
+      </div>
+      <div class="column">
+        <button class="button" id="clear">Clear Records</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <table class="table" id="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Amount (ml)</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Get the elements from the document
+    var date = document.getElementById("date");
+    var time = document.getElementById("time");
+    var amount = document.getElementById("amount");
+    var add = document.getElementById("add");
+    var clear = document.getElementById("clear");
+    var table = document.getElementById("table");
+    var tbody = document.getElementById("tbody");
+
+    // Add a record to the table
+    function addRecord() {
+      // Get the values from the inputs
+      var dateValue = date.value;
+      var timeValue = time.value;
+      var amountValue = amount.value;
+
+      // Validate the inputs
+      if (dateValue == "" || timeValue == "" || amountValue == "") {
+        alert("Please fill in all the fields.");
+        return;
+      }
+
+      // Create a new row and cells
+      var row = document.createElement("tr");
+      var dateCell = document.createElement("td");
+      var timeCell = document.createElement("td");
+      var amountCell = document.createElement("td");
+
+      // Set the cell values
+      dateCell.textContent = dateValue;
+      timeCell.textContent = timeValue;
+      amountCell.textContent = amountValue;
+
+      // Append the cells to the row
+      row.appendChild(dateCell);
+      row.appendChild(timeCell);
+      row.appendChild(amountCell);
+
+      // Append the row to the table body
+      tbody.appendChild(row);
+
+      // Clear the inputs
+      date.value = "";
+      time.value = "";
+      amount.value = "";
+    }
+
+    // Clear all the records from the table
+    function clearRecords() {
+      // Confirm the action
+      var confirm = window.confirm("Are you sure you want to clear all the records?");
+      if (confirm) {
+        // Remove all the rows from the table body
+        while (tbody.firstChild) {
+          tbody.removeChild(tbody.firstChild);
+        }
+      }
+    }
+
+    // Add event listeners to the buttons
+    add.addEventListener("click", addRecord);
+    clear.addEventListener("click", clearRecords);
+  </script>
 </body>
 </html>
